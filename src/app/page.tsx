@@ -7,6 +7,8 @@ import { InvoiceData } from "@/types/invoice";
 import { v4 as uuidv4 } from "uuid";
 
 const STORAGE_KEY = "dzevidas-last-invoice-number";
+const AUTH_STORAGE_KEY = "dzevidas-auth";
+const PASSWORD = "papahabdichlieb";
 
 function getNextInvoiceNumber(): string {
   if (typeof window === "undefined") return "2026-001";
@@ -44,17 +46,34 @@ export default function Home() {
     rechnungsnummer: "2026-001",
     items: [{ id: uuidv4(), bezeichnung: "", menge: 1, preis: 0 }],
   });
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
 
-  // Load next invoice number on mount
+  // Check authentication and load invoice number on mount
   useEffect(() => {
+    // Check if already authenticated
+    const authStatus = localStorage.getItem(AUTH_STORAGE_KEY);
+    if (authStatus === "true") {
+      setIsAuthenticated(true);
+    }
+
     const nextNumber = getNextInvoiceNumber();
     setInvoiceData((prev) => ({
       ...prev,
       rechnungsnummer: nextNumber,
     }));
-    setIsInitialized(true);
   }, []);
+
+  const handleLogin = () => {
+    if (passwordInput === PASSWORD) {
+      setIsAuthenticated(true);
+      setPasswordError(false);
+      localStorage.setItem(AUTH_STORAGE_KEY, "true");
+    } else {
+      setPasswordError(true);
+    }
+  };
 
   const handlePrint = () => {
     // Save the current invoice number before printing
@@ -74,6 +93,54 @@ export default function Home() {
     });
     setActiveTab("form");
   };
+
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+        <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-sm">
+          <h1 className="text-xl font-bold text-gray-800 mb-1 text-center">
+            Rechnungsgenerator
+          </h1>
+          <p className="text-sm text-gray-500 mb-6 text-center">
+            Dzevida&apos;s Catering
+          </p>
+
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">
+                Passwort
+              </label>
+              <input
+                type="password"
+                value={passwordInput}
+                onChange={(e) => {
+                  setPasswordInput(e.target.value);
+                  setPasswordError(false);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleLogin();
+                }}
+                placeholder="Passwort eingeben"
+                className={`w-full px-3 py-3 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 ${
+                  passwordError ? "border-red-500" : "border-gray-300"
+                }`}
+              />
+              {passwordError && (
+                <p className="text-red-500 text-xs mt-1">Falsches Passwort</p>
+              )}
+            </div>
+            <button
+              onClick={handleLogin}
+              className="w-full py-3 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition-colors"
+            >
+              Anmelden
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
