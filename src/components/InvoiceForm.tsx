@@ -102,10 +102,18 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
                   <input
                     type="number"
                     min="1"
-                    value={item.menge}
+                    value={item.menge || ""}
+                    onFocus={(e) => {
+                      if (item.menge === 0 || item.menge === 1) e.target.select();
+                    }}
                     onChange={(e) =>
-                      updateItem(item.id, "menge", parseInt(e.target.value) || 1)
+                      updateItem(item.id, "menge", parseInt(e.target.value) || 0)
                     }
+                    onBlur={(e) => {
+                      if (!e.target.value || parseInt(e.target.value) < 1) {
+                        updateItem(item.id, "menge", 1);
+                      }
+                    }}
                     className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                     required
                   />
@@ -116,10 +124,14 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
                     type="number"
                     min="0"
                     step="0.01"
-                    value={item.preis}
+                    value={item.preis || ""}
+                    onFocus={(e) => {
+                      if (item.preis === 0) e.target.select();
+                    }}
                     onChange={(e) =>
                       updateItem(item.id, "preis", parseFloat(e.target.value) || 0)
                     }
+                    placeholder="0.00"
                     className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                     required
                   />
