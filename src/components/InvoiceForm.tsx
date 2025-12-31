@@ -41,7 +41,7 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
   return (
     <div className="space-y-4">
       {/* Date and Invoice Number */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="flex flex-col gap-3">
         <div>
           <label className="block text-xs font-medium text-gray-700 mb-1">
             Datum
@@ -56,13 +56,13 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
         </div>
         <div>
           <label className="block text-xs font-medium text-gray-700 mb-1">
-            Rechnungsnr.
+            Rechnungsnummer
           </label>
           <input
             type="text"
             value={data.rechnungsnummer}
             onChange={(e) => onChange({ ...data, rechnungsnummer: e.target.value })}
-            placeholder="2024-001"
+            placeholder="2026-001"
             className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
             required
           />
