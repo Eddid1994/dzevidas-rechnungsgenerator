@@ -55,7 +55,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
           <p className="text-gray-600">55469 Simmern</p>
           <p className="text-gray-600 mt-2">Tel: 0157 77964382</p>
           <p className="text-gray-600">E-Mail:</p>
-          <p className="text-gray-600">dzevidas.catering@hotmail.com</p>
+          <p className="text-gray-600">dzevidascatering@hotmail.com</p>
         </div>
 
         {/* Date and Invoice Number */}
