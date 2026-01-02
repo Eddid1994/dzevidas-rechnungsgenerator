@@ -49,7 +49,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
         <div className="flex justify-between mb-4 -mt-3">
           {/* Customer Address - Window position */}
           <div className="text-sm leading-relaxed text-black">
-            <p className="text-[9px] text-gray-400 mb-1">Dzevida&apos;s Catering · Bingener str 38 · 55469 Simmern</p>
+            <p className="text-[9px] text-gray-600 mb-1">Dzevida&apos;s Catering · Bingener str 38 · 55469 Simmern</p>
             <div className="min-h-[50px]">
               {data.kundenName && <p className="font-semibold">{data.kundenName}</p>}
               {data.kundenAdresse && <p>{data.kundenAdresse}</p>}
@@ -139,7 +139,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
         </div>
 
         {/* Tax Note */}
-        <p className="text-[10px] text-gray-500 mb-4">
+        <p className="text-[10px] text-black italic mb-4">
           Kein Ausweis von Umsatzsteuer, da Kleinunternehmer gemäß §19 UStG
         </p>
 
