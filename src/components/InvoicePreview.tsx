@@ -38,7 +38,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
         </div>
 
         {/* Header */}
-        <div className="text-center mb-4">
+        <div className="text-center mb-2">
           <h1 className="text-base font-bold text-black mb-1">RECHNUNG</h1>
           <h2 className="text-sm font-bold text-black border-b-2 border-black pb-1 inline-block">
             Dzevida&apos;s Catering
@@ -46,10 +46,10 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
         </div>
 
         {/* Customer Address (left) and Contact Info (right) */}
-        <div className="flex justify-between mb-4">
+        <div className="flex justify-between mb-4 -mt-3">
           {/* Customer Address - Window position */}
-          <div className="text-xs leading-relaxed text-black">
-            <p className="text-[8px] text-gray-400 mb-1">Dzevida&apos;s Catering · Bingener str 38 · 55469 Simmern</p>
+          <div className="text-sm leading-relaxed text-black">
+            <p className="text-[9px] text-gray-400 mb-1">Dzevida&apos;s Catering · Bingener str 38 · 55469 Simmern</p>
             <div className="min-h-[50px]">
               {data.kundenName && <p className="font-semibold">{data.kundenName}</p>}
               {data.kundenAdresse && <p>{data.kundenAdresse}</p>}
