@@ -153,7 +153,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 overflow-x-hidden">
       {/* Mobile Tab Navigation - Hidden on print */}
-      <div className="print:hidden sticky top-0 z-50 bg-white shadow-md">
+      <div data-print-hide="true" className="sticky top-0 z-50 bg-white shadow-md">
         <div className="flex">
           <button
             onClick={() => setActiveTab("form")}
@@ -182,7 +182,8 @@ export default function Home() {
       <div className="print:p-0">
         {/* Form View - Hidden on print */}
         <div
-          className={`print:hidden ${activeTab === "form" ? "block" : "hidden"}`}
+          data-print-hide="true"
+          className={`${activeTab === "form" ? "block" : "hidden"}`}
         >
           <div className="p-4 max-w-lg mx-auto">
             <div className="bg-white rounded-xl shadow-lg p-4 mb-4">
@@ -205,10 +206,10 @@ export default function Home() {
 
         {/* Preview View */}
         <div
-          className={`${activeTab === "preview" ? "block" : "hidden"} print:block`}
+          className={`${activeTab === "preview" ? "block" : "hidden"}`}
         >
           {/* Print Button - Hidden on print */}
-          <div className="print:hidden p-4 max-w-lg mx-auto">
+          <div data-print-hide="true" className="p-4 max-w-lg mx-auto">
             <div className="flex flex-col gap-2 mb-4">
               <div className="flex gap-2">
                 <button
@@ -234,12 +235,17 @@ export default function Home() {
           </div>
 
           {/* Invoice Preview - Scaled for mobile, full size for print */}
-          <div className="pb-4 overflow-x-auto print:overflow-visible print:p-0">
-            <div className="min-w-[210mm] flex justify-center print:min-w-0 print:block">
+          <div data-print-hide="true" className="pb-4 overflow-x-auto">
+            <div className="min-w-[210mm] flex justify-center">
               <div className="transform scale-[0.45] sm:scale-[0.5] md:scale-[0.6] lg:scale-75 xl:scale-100 origin-top" style={{ transformOrigin: 'top center' }}>
                 <InvoicePreview data={invoiceData} />
               </div>
             </div>
+          </div>
+
+          {/* Print-only version - no scaling, shown only during print */}
+          <div id="print-invoice" className="hidden print:block">
+            <InvoicePreview data={invoiceData} />
           </div>
         </div>
       </div>
