@@ -151,7 +151,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 overflow-x-hidden">
       {/* Mobile Tab Navigation - Hidden on print */}
       <div className="print:hidden sticky top-0 z-50 bg-white shadow-md">
         <div className="flex">
@@ -221,7 +221,7 @@ export default function Home() {
                   onClick={handlePrint}
                   className="flex-1 py-3 bg-teal-600 text-white rounded-xl font-medium hover:bg-teal-700 transition-colors"
                 >
-                  PDF Speichern
+                  PDF Drucken
                 </button>
               </div>
               <button
@@ -233,9 +233,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Invoice Preview */}
-          <div className="print:m-0 pb-4 print:pb-0">
-            <InvoicePreview data={invoiceData} />
+          {/* Invoice Preview - Scaled for mobile */}
+          <div className="print:m-0 pb-4 print:pb-0 flex justify-center">
+            <div className="origin-top scale-[0.45] sm:scale-[0.5] md:scale-[0.6] lg:scale-75 xl:scale-100 print:scale-100">
+              <InvoicePreview data={invoiceData} />
+            </div>
           </div>
         </div>
       </div>
