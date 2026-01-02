@@ -29,50 +29,61 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
   return (
     <div
       id="invoice-preview"
-      className="bg-white w-full max-w-[210mm] mx-auto shadow-lg print:shadow-none"
-      style={{ minHeight: "297mm" }}
+      className="bg-white w-[210mm] h-[297mm] mx-auto shadow-lg print:shadow-none overflow-hidden"
     >
-      <div className="p-6 sm:p-10 relative" style={{ minHeight: "297mm" }}>
-        {/* Header */}
-        <div className="flex justify-between items-start mb-8">
-          <div>
-            <h1 className="text-lg sm:text-xl font-bold text-gray-500 mb-2">
-              RECHNUNG
-            </h1>
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-500 border-b-2 border-gray-400 pb-2">
-              Dzevida&apos;s Catering
-            </h2>
-          </div>
-          <div className="w-24 sm:w-32">
-            <Logo className="w-full h-auto" />
-          </div>
+      <div className="p-[10mm] flex flex-col h-full">
+        {/* Logo - Centered */}
+        <div className="flex justify-center mb-3">
+          <Logo className="w-36 h-auto" />
         </div>
 
-        {/* Contact Info - Right aligned */}
-        <div className="text-right mb-6 text-sm">
-          <p className="font-bold text-gray-800">Dzevida&apos;s Catering</p>
-          <p className="text-gray-600">Bingener str 38</p>
-          <p className="text-gray-600">55469 Simmern</p>
-          <p className="text-gray-600 mt-2">Tel: 0157 77964382</p>
-          <p className="text-gray-600">E-Mail:</p>
-          <p className="text-gray-600">dzevidascatering@hotmail.com</p>
+        {/* Header */}
+        <div className="text-center mb-4">
+          <h1 className="text-base font-bold text-black mb-1">RECHNUNG</h1>
+          <h2 className="text-sm font-bold text-black border-b-2 border-black pb-1 inline-block">
+            Dzevida&apos;s Catering
+          </h2>
+        </div>
+
+        {/* Customer Address (left) and Contact Info (right) */}
+        <div className="flex justify-between mb-4">
+          {/* Customer Address - Window position */}
+          <div className="text-xs leading-relaxed text-black">
+            <p className="text-[8px] text-gray-400 mb-1">Dzevida&apos;s Catering · Bingener str 38 · 55469 Simmern</p>
+            <div className="min-h-[50px]">
+              {data.kundenName && <p className="font-semibold">{data.kundenName}</p>}
+              {data.kundenAdresse && <p>{data.kundenAdresse}</p>}
+              {(data.kundenPlz || data.kundenOrt) && (
+                <p>{data.kundenPlz} {data.kundenOrt}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Contact Info - Right aligned */}
+          <div className="text-right text-xs leading-relaxed">
+            <p className="font-bold text-black">Dzevida&apos;s Catering</p>
+            <p className="text-black">Bingener str 38</p>
+            <p className="text-black">55469 Simmern</p>
+            <p className="text-black mt-1">Tel: 0157 77964382</p>
+            <p className="text-black">E-Mail: dzevidascatering@hotmail.com</p>
+          </div>
         </div>
 
         {/* Date and Invoice Number */}
-        <div className="flex justify-center gap-8 sm:gap-16 mb-6 text-sm">
+        <div className="flex justify-center gap-20 mb-5 text-xs">
           <div className="text-center">
-            <p className="text-gray-500 text-xs">Dat:</p>
-            <p className="text-gray-800">{formatDate(data.datum)}</p>
+            <p className="text-black font-semibold mb-1">Datum:</p>
+            <p className="text-black">{formatDate(data.datum)}</p>
           </div>
           <div className="text-center">
-            <p className="text-gray-500 text-xs">Rec Nr:</p>
-            <p className="text-gray-800">{data.rechnungsnummer || "-"}</p>
+            <p className="text-black font-semibold mb-1">Rechnungsnr.:</p>
+            <p className="text-black">{data.rechnungsnummer || "-"}</p>
           </div>
         </div>
 
         {/* Table */}
-        <div className="mb-8">
-          <div className="grid grid-cols-12 gap-2 border-b border-gray-300 pb-2 mb-2 text-sm font-bold text-gray-700">
+        <div className="mb-4">
+          <div className="grid grid-cols-12 gap-2 border-b-2 border-black pb-2 mb-2 text-xs font-bold text-black">
             <div className="col-span-5">Bezeichnung</div>
             <div className="col-span-2 text-center">Menge</div>
             <div className="col-span-2 text-center">Preis</div>
@@ -82,7 +93,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
           {data.items.map((item, index) => (
             <div
               key={index}
-              className="grid grid-cols-12 gap-2 py-1 text-sm text-gray-700"
+              className="grid grid-cols-12 gap-2 py-1 text-xs text-black"
             >
               <div className="col-span-5 truncate">{item.bezeichnung || ""}</div>
               <div className="col-span-2 text-center">
@@ -98,11 +109,11 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
           ))}
 
           {/* Empty rows */}
-          {Array.from({ length: Math.max(0, 10 - data.items.length) }).map(
+          {Array.from({ length: Math.max(0, 8 - data.items.length) }).map(
             (_, index) => (
               <div
                 key={`empty-${index}`}
-                className="grid grid-cols-12 gap-2 py-1 text-sm text-gray-700"
+                className="grid grid-cols-12 gap-2 py-1 text-xs text-black"
               >
                 <div className="col-span-5"></div>
                 <div className="col-span-2 text-center"></div>
@@ -115,39 +126,42 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
 
         {/* Totals */}
         <div className="flex justify-end mb-6">
-          <div className="w-64">
-            <div className="flex justify-between border-t border-gray-300 py-2 text-sm">
-              <span className="text-gray-700">Gesamt</span>
-              <span className="text-gray-700">{formatCurrency(calculateTotal())}</span>
+          <div className="w-52">
+            <div className="flex justify-between border-t border-black py-2 text-xs">
+              <span className="text-black">Gesamt</span>
+              <span className="text-black">{formatCurrency(calculateTotal())}</span>
             </div>
-            <div className="flex justify-between border-t border-gray-300 py-2 font-bold">
-              <span className="text-gray-800">Zu zahlender Betrag</span>
-              <span className="text-gray-800">{formatCurrency(calculateTotal())}</span>
+            <div className="flex justify-between border-t-2 border-black py-2 text-sm font-bold">
+              <span className="text-black">Zu zahlender Betrag</span>
+              <span className="text-black">{formatCurrency(calculateTotal())}</span>
             </div>
           </div>
         </div>
 
         {/* Tax Note */}
-        <p className="text-xs text-gray-500 mb-8">
+        <p className="text-[10px] text-gray-500 mb-4">
           Kein Ausweis von Umsatzsteuer, da Kleinunternehmer gemäß §19 UStG
         </p>
 
-        {/* Footer - Absolute positioned at bottom */}
-        <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 right-6 sm:right-10">
-          <div className="flex flex-col sm:flex-row justify-between border-t border-gray-300 pt-4 text-xs text-gray-600">
-            <div className="mb-4 sm:mb-0">
-              <p className="font-bold mb-1">Sparda Bank Südwest eG</p>
+        {/* Spacer */}
+        <div className="flex-grow"></div>
+
+        {/* Footer */}
+        <div className="mt-auto">
+          <div className="flex justify-between border-t border-black pt-3 text-[10px] text-black leading-relaxed">
+            <div>
+              <p className="font-bold">Sparda Bank Südwest eG</p>
               <p>IBAN: DE74 5509 0500 0006 6453 05</p>
               <p>BIC: GENODEF1S01</p>
               <p>Dzevida Dizdaric</p>
             </div>
-            <div className="text-left sm:text-right">
-              <p className="font-bold mb-1">Inhaber: Dzevida Dizdaric</p>
+            <div className="text-right">
+              <p className="font-bold">Inhaber: Dzevida Dizdaric</p>
               <p>Bingener str 38</p>
               <p>55469 Simmern</p>
             </div>
           </div>
-          <p className="text-center text-gray-500 mt-4 text-base italic">
+          <p className="text-center text-black mt-3 text-sm italic">
             Wir sagen Danke! :)
           </p>
         </div>

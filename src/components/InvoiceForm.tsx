@@ -69,6 +69,41 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
         </div>
       </div>
 
+      {/* Customer Address */}
+      <div className="bg-gray-50 p-3 rounded-lg space-y-2">
+        <h3 className="text-sm font-medium text-gray-900 mb-2">Kundenadresse</h3>
+        <input
+          type="text"
+          value={data.kundenName}
+          onChange={(e) => onChange({ ...data, kundenName: e.target.value })}
+          placeholder="Name / Firma"
+          className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+        />
+        <input
+          type="text"
+          value={data.kundenAdresse}
+          onChange={(e) => onChange({ ...data, kundenAdresse: e.target.value })}
+          placeholder="Straße und Hausnummer"
+          className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+        />
+        <div className="grid grid-cols-3 gap-2">
+          <input
+            type="text"
+            value={data.kundenPlz}
+            onChange={(e) => onChange({ ...data, kundenPlz: e.target.value })}
+            placeholder="PLZ"
+            className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+          />
+          <input
+            type="text"
+            value={data.kundenOrt}
+            onChange={(e) => onChange({ ...data, kundenOrt: e.target.value })}
+            placeholder="Ort"
+            className="col-span-2 w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+          />
+        </div>
+      </div>
+
       {/* Items */}
       <div>
         <div className="flex justify-between items-center mb-2">

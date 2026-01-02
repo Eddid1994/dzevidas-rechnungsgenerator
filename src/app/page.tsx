@@ -44,6 +44,10 @@ export default function Home() {
   const [invoiceData, setInvoiceData] = useState<InvoiceData>({
     datum: new Date().toISOString().split("T")[0],
     rechnungsnummer: "2026-001",
+    kundenName: "",
+    kundenAdresse: "",
+    kundenPlz: "",
+    kundenOrt: "",
     items: [{ id: uuidv4(), bezeichnung: "", menge: 1, preis: 0 }],
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -89,6 +93,10 @@ export default function Home() {
     setInvoiceData({
       datum: new Date().toISOString().split("T")[0],
       rechnungsnummer: nextNumber,
+      kundenName: "",
+      kundenAdresse: "",
+      kundenPlz: "",
+      kundenOrt: "",
       items: [{ id: uuidv4(), bezeichnung: "", menge: 1, preis: 0 }],
     });
     setActiveTab("form");

@@ -8,5 +8,9 @@ export interface InvoiceItem {
 export interface InvoiceData {
   datum: string;
   rechnungsnummer: string;
+  kundenName: string;
+  kundenAdresse: string;
+  kundenPlz: string;
+  kundenOrt: string;
   items: InvoiceItem[];
 }

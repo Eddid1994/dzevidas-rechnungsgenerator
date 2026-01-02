@@ -21,27 +21,48 @@ body {
 /* Print styles */
 @media print {
   @page {
-    size: A4;
+    size: A4 portrait;
     margin: 0;
   }
 
-  html,
-  body {
-    width: 210mm;
-    height: 297mm;
-    margin: 0;
-    padding: 0;
-    background: white !important;
+  * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
+  html,
+  body {
+    width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    overflow: hidden !important;
+  }
+
+  body > div {
+    height: 297mm !important;
+    overflow: hidden !important;
+  }
+
   #invoice-preview {
     width: 210mm !important;
-    min-height: 297mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    min-height: auto !important;
     max-width: 210mm !important;
     margin: 0 !important;
+    padding: 8mm !important;
     box-shadow: none !important;
+    overflow: hidden !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  #invoice-preview > div {
+    height: 100% !important;
+    max-height: 281mm !important;
+    overflow: hidden !important;
   }
 }
 
