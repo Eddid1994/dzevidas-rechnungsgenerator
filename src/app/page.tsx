@@ -53,6 +53,7 @@ export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [previewScale, setPreviewScale] = useState(0.4);
 
   // Check authentication and load invoice number on mount
   useEffect(() => {
@@ -67,6 +68,18 @@ export default function Home() {
       ...prev,
       rechnungsnummer: nextNumber,
     }));
+
+    // Calculate preview scale based on container width
+    const updateScale = () => {
+      const containerWidth = Math.min(window.innerWidth - 32, 512) - 24; // max-w-lg minus padding
+      const invoiceWidth = 210 * 3.78; // 210mm in pixels (approx)
+      const scale = containerWidth / invoiceWidth;
+      setPreviewScale(Math.min(scale, 1));
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
   }, []);
 
   const handleLogin = () => {
@@ -208,7 +221,7 @@ export default function Home() {
         <div
           className={`${activeTab === "preview" ? "block" : "hidden"}`}
         >
-          {/* Print Button - Hidden on print */}
+          {/* Buttons and Preview - Hidden on print */}
           <div data-print-hide="true" className="p-4 max-w-lg mx-auto">
             <div className="flex flex-col gap-2 mb-4">
               <div className="flex gap-2">
@@ -232,13 +245,21 @@ export default function Home() {
                 Neue Rechnung erstellen
               </button>
             </div>
-          </div>
 
-          {/* Invoice Preview - Scaled for mobile, full size for print */}
-          <div data-print-hide="true" className="pb-4 overflow-x-auto">
-            <div className="min-w-[210mm] flex justify-center">
-              <div className="transform scale-[0.45] sm:scale-[0.5] md:scale-[0.6] lg:scale-75 xl:scale-100 origin-top" style={{ transformOrigin: 'top center' }}>
-                <InvoicePreview data={invoiceData} />
+            {/* Invoice Preview - Scaled to fit container */}
+            <div className="bg-white rounded-xl shadow-lg p-3 overflow-hidden">
+              <div
+                className="relative w-full overflow-hidden"
+                style={{ height: `${297 * 3.78 * previewScale}px` }}
+              >
+                <div
+                  style={{
+                    transform: `scale(${previewScale})`,
+                    transformOrigin: 'top left'
+                  }}
+                >
+                  <InvoicePreview data={invoiceData} />
+                </div>
               </div>
             </div>
           </div>
