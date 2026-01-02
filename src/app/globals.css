@@ -37,44 +37,53 @@ body {
     margin: 0 !important;
     padding: 0 !important;
     background: white !important;
-    overflow: hidden !important;
-    max-width: 210mm !important;
+    overflow: visible !important;
+    max-width: none !important;
   }
 
-  /* Reset all transforms for print */
-  body * {
-    transform: none !important;
-  }
-
-  /* Hide everything except invoice */
-  body > div > div:first-child,
-  body > div > div > div:first-child {
+  /* Hide everything except the invoice */
+  body > div > div:first-child {
     display: none !important;
   }
 
+  /* Reset ALL parent wrappers */
+  body > div,
+  body > div > div,
+  body > div > div > div,
+  body > div > div > div > div,
+  body > div > div > div > div > div {
+    display: block !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    overflow: visible !important;
+    min-width: 0 !important;
+  }
+
+  /* The invoice preview itself */
   #invoice-preview {
-    position: absolute !important;
+    position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 210mm !important;
     height: 297mm !important;
-    max-height: 297mm !important;
-    min-height: auto !important;
-    max-width: 210mm !important;
     margin: 0 !important;
-    padding: 8mm !important;
+    padding: 0 !important;
     box-shadow: none !important;
     overflow: hidden !important;
-    page-break-after: avoid !important;
-    page-break-inside: avoid !important;
     transform: none !important;
+    z-index: 9999 !important;
+    background: white !important;
   }
 
   #invoice-preview > div {
+    padding: 10mm !important;
     height: 100% !important;
-    max-height: 281mm !important;
-    overflow: hidden !important;
-    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 }
 

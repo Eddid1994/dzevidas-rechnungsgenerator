@@ -233,10 +233,12 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Invoice Preview - Scaled for mobile */}
-          <div className="print:m-0 pb-4 print:pb-0 flex justify-center">
-            <div className="origin-top scale-[0.45] sm:scale-[0.5] md:scale-[0.6] lg:scale-75 xl:scale-100 print:scale-100">
-              <InvoicePreview data={invoiceData} />
+          {/* Invoice Preview - Scaled for mobile, full size for print */}
+          <div className="pb-4 overflow-x-auto print:overflow-visible print:p-0">
+            <div className="min-w-[210mm] flex justify-center print:min-w-0 print:block">
+              <div className="transform scale-[0.45] sm:scale-[0.5] md:scale-[0.6] lg:scale-75 xl:scale-100 origin-top" style={{ transformOrigin: 'top center' }}>
+                <InvoicePreview data={invoiceData} />
+              </div>
             </div>
           </div>
         </div>
