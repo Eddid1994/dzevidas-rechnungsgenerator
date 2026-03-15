@@ -39,17 +39,22 @@ function saveInvoiceNumber(invoiceNumber: string): void {
   localStorage.setItem(STORAGE_KEY, invoiceNumber);
 }
 
-export default function Home() {
-  const [activeTab, setActiveTab] = useState<"form" | "preview">("form");
-  const [invoiceData, setInvoiceData] = useState<InvoiceData>({
+function createEmptyInvoice(rechnungsnummer: string): InvoiceData {
+  return {
     datum: new Date().toISOString().split("T")[0],
-    rechnungsnummer: "2026-001",
+    beschreibung: "",
+    rechnungsnummer,
     kundenName: "",
     kundenAdresse: "",
     kundenPlz: "",
     kundenOrt: "",
     items: [{ id: uuidv4(), bezeichnung: "", menge: 1, preis: 0 }],
-  });
+  };
+}
+
+export default function Home() {
+  const [activeTab, setActiveTab] = useState<"form" | "preview">("form");
+  const [invoiceData, setInvoiceData] = useState<InvoiceData>(createEmptyInvoice("2026-001"));
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordError, setPasswordError] = useState(false);
@@ -71,7 +76,7 @@ export default function Home() {
 
     // Calculate preview scale based on container width
     const updateScale = () => {
-      const containerWidth = Math.min(window.innerWidth - 32, 512) - 24; // max-w-lg minus padding
+      const containerWidth = Math.min(window.innerWidth - 32, 512) - 48; // outer padding (p-4) + card padding (p-3)
       const invoiceWidth = 210 * 3.78; // 210mm in pixels (approx)
       const scale = containerWidth / invoiceWidth;
       setPreviewScale(Math.min(scale, 1));
@@ -103,15 +108,7 @@ export default function Home() {
     saveInvoiceNumber(invoiceData.rechnungsnummer);
     const nextNumber = getNextInvoiceNumber();
 
-    setInvoiceData({
-      datum: new Date().toISOString().split("T")[0],
-      rechnungsnummer: nextNumber,
-      kundenName: "",
-      kundenAdresse: "",
-      kundenPlz: "",
-      kundenOrt: "",
-      items: [{ id: uuidv4(), bezeichnung: "", menge: 1, preis: 0 }],
-    });
+    setInvoiceData(createEmptyInvoice(nextNumber));
     setActiveTab("form");
   };
 
@@ -249,13 +246,16 @@ export default function Home() {
             {/* Invoice Preview - Scaled to fit container */}
             <div className="bg-white rounded-xl shadow-lg p-3 overflow-hidden">
               <div
-                className="relative w-full overflow-hidden"
-                style={{ height: `${297 * 3.78 * previewScale}px` }}
+                className="relative"
+                style={{
+                  width: `${210 * 3.78 * previewScale}px`,
+                  height: `${297 * 3.78 * previewScale}px`,
+                }}
               >
                 <div
                   style={{
                     transform: `scale(${previewScale})`,
-                    transformOrigin: 'top left'
+                    transformOrigin: 'top left',
                   }}
                 >
                   <InvoicePreview data={invoiceData} />

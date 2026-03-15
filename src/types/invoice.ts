@@ -7,6 +7,7 @@ export interface InvoiceItem {
 
 export interface InvoiceData {
   datum: string;
+  beschreibung: string;
   rechnungsnummer: string;
   kundenName: string;
   kundenAdresse: string;

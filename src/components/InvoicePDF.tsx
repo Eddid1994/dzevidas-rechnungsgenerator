@@ -62,6 +62,9 @@ const styles = StyleSheet.create({
     color: "#666",
     marginBottom: 2,
   },
+  descriptionSection: {
+    marginBottom: 10,
+  },
   dateSection: {
     flexDirection: "row",
     justifyContent: "center",
@@ -285,6 +288,14 @@ export default function InvoicePDF({ data }: InvoicePDFProps) {
           <Text style={styles.contactText}>E-Mail:</Text>
           <Text style={styles.contactText}>dzevidas.catering@hotmail.com</Text>
         </View>
+
+        {/* Description */}
+        {data.beschreibung && (
+          <View style={styles.descriptionSection}>
+            <Text style={styles.dateLabel}>Beschreibung:</Text>
+            <Text style={styles.dateValue}>{data.beschreibung}</Text>
+          </View>
+        )}
 
         {/* Date and Invoice Number */}
         <View style={styles.dateSection}>

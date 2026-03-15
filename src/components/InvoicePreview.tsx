@@ -60,7 +60,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
           </div>
 
           {/* Contact Info - Right aligned */}
-          <div className="text-right text-xs leading-relaxed">
+          <div className="text-right text-xs leading-relaxed shrink-0">
             <p className="font-bold text-black">Dzevida&apos;s Catering</p>
             <p className="text-black">Bingener str 38</p>
             <p className="text-black">55469 Simmern</p>
@@ -68,6 +68,14 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
             <p className="text-black">E-Mail: dzevidascatering@hotmail.com</p>
           </div>
         </div>
+
+        {/* Description */}
+        {data.beschreibung && (
+          <div className="mb-3 text-xs">
+            <p className="text-black font-semibold mb-1">Beschreibung:</p>
+            <p className="text-black">{data.beschreibung}</p>
+          </div>
+        )}
 
         {/* Date and Invoice Number */}
         <div className="flex justify-center gap-20 mb-5 text-xs">
@@ -155,7 +163,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
               <p>BIC: GENODEF1S01</p>
               <p>Dzevida Dizdaric</p>
             </div>
-            <div className="text-right">
+            <div className="text-right shrink-0">
               <p className="font-bold">Inhaber: Dzevida Dizdaric</p>
               <p>Bingener str 38</p>
               <p>55469 Simmern</p>
